@@ -36,6 +36,7 @@ def merge(left, right):
 
 # Example usage:
 my_list = [3, 6, 8, 10, 1, 2, 1]
+print("Original list is:", my_list)
 print("After sorting:")
 sorted_list = merge_sort(my_list)
 print("Sorted list is:", sorted_list)
