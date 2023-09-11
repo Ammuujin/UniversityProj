@@ -4,3 +4,4 @@
 # 2. Quick sort
 # 3. Merge sort
 # 4. Heap sort
+# 5. Insertion sort
