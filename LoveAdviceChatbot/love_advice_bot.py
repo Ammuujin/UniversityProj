@@ -1,4 +1,5 @@
 from chatterbot import ChatBot
+from googletrans import Translator
 import nltk
 
 # Set NLTK data path if needed
@@ -6,6 +7,9 @@ import nltk
 
 # Create a new chatbot instance
 chatbot = ChatBot('LoveAdviceBot')
+
+# Create a Translator instance
+translator = Translator()
 
 # Predefined love advice responses (extended)
 love_advice_responses = {
@@ -75,6 +79,34 @@ def chat_with_bot():
         # Get a response from the predefined responses or handle common questions
         response = get_love_advice(user_input, name, age)
         print("Love Advice Bot:", response)
+
+# Function to interact with the chatbot
+def chat_with_bot():
+    print("Love Advice Bot: Hello! I'd like to get to know you better.")
+    name = input("What's your name? ")
+    age = input("How old are you? ")
+
+    print(f"Love Advice Bot: Nice to meet you, {name}! Let's talk about love advice.")
+    while True:
+        user_input = input(f"{name}: ")
+        if user_input.lower() == "exit":
+            print("Love Advice Bot: Goodbye!")
+            break
+
+        # Detect the language of the user's input
+        user_language = translator.detect(user_input).lang
+
+        # Translate the user's input to English for processing
+        user_input_english = translator.translate(user_input, src=user_language, dest='en').text
+
+        # Get a response from the predefined responses or handle common questions
+        response = get_love_advice(user_input_english, name, age)
+
+        # Translate the response back to the user's language
+        response_in_user_language = translator.translate(response, src='en', dest=user_language).text
+
+        print("Love Advice Bot:", response_in_user_language)
+
 
 # Start the chat
 chat_with_bot()
