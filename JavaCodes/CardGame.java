@@ -3,7 +3,6 @@ package JavaCodes;
 import java.util.Scanner;
 // Class 이름과 파일명을 일치시킴.
 // main()을 포함한 class는 class name 앞에 public을 반드시 붙인다.
-
 public class CardGame {
     public static void main(String[] args) {
         Card c1 = new Card(); // Card for Player
@@ -37,7 +36,6 @@ public class CardGame {
         } while (result < 1);
         in.close();
     }
-
     // print results
     static void printResult(int result) {
         if (result > 0) {
@@ -79,9 +77,8 @@ public class CardGame {
         }
         return s + " of " + c.suit;
     }
-    // compare() method
-    // when c1.rank and c2.rank are same then decide suit sequences like that Spade > Diamond > Heart > Club
-    // when rank and suit are all same then return 0
+    // compare() method 
+    //Spade > Diamond > Heart > Club
     static int compare(Card c1, Card c2){
         int result = 0;
         if(c1.rank > c2.rank){
@@ -91,16 +88,22 @@ public class CardGame {
             result = -1;
         }
         else if (c1.rank == c2.rank && c1.suit!=c2.suit){
-            if(c1.suit.equals("Spade")){
+            if(c1.suit=="Spade" && (c2.suit=="Diamond" || c2.suit=="Heart" || c2.suit=="Club")){
                 result = 1;
             }
-            else if(c1.suit.equals("Diamond") && c2.suit.equals("Spade")){
+            else if(c2.suit=="Spade" && (c1.suit=="Diamond" || c1.suit=="Heart" || c1.suit=="Club")){
                 result = -1;
             }
-            else if(c1.suit.equals("Heart") && c2.suit.equals("Spade") || c2.suit.equals("Diamond")){
+            else if(c1.suit=="Diamond" && (c2.suit=="Heart" || c2.suit=="Club")){
+                result = 1;
+            }
+            else if(c2.suit=="Diamond" && (c1.suit=="Heart" || c1.suit=="Club")){
                 result = -1;
             }
-            else if(c1.suit.equals("Club") && c2.suit.equals("Spade") || c2.suit.equals("Diamond") || c2.suit.equals("Heart")){
+            else if(c1.suit=="Heart" && c2.suit=="Club"){
+                result = 1;
+            }
+            else if(c2.suit=="Heart" && c1.suit=="Club"){
                 result = -1;
             }
         }
@@ -110,4 +113,3 @@ public class CardGame {
         return result;
     }
 } // end of class CardGame
-
