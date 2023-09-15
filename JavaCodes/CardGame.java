@@ -1,5 +1,6 @@
 package JavaCodes;
-// 파일명: CardGame.java import java.util.Scanner;
+
+// 파일명: CardGame.java import java.util.Scanner
 import java.util.Scanner;
 // Class 이름과 파일명을 일치시킴.
 // main()을 포함한 class는 class name 앞에 public을 반드시 붙인다.
