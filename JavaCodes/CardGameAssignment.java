@@ -40,7 +40,7 @@ public class CardGameAssignment {
             //We have 52 different cards. Now give a every player random card from 52 cards.
             i=0;
             while( i < playerNum ){
-                
+                //Give card to players from 52 cards.
             }
             d.suit = suitInString(suit);
             c1.suit = suitInString(suit);
