@@ -8,17 +8,33 @@ int main(){
     scanf("%d", &base1);
     printf("Enter the number: ");
     scanf("%lf", &num1);
-    print("Enter the base you want to convert: ");
+    printf("Enter the base you want to convert: ");
     scanf("%d", base2);
     num2 = num1;
     int intPart = (int)num2;
     double decPart = num2 - intPart;
     int i = 0;
     int intPart2[100];
+    double decPart2[100];
     while(intPart != 0){
-        intPart2[i]=intPart % base2;
-        intPart = intPart / base2;
+        intPart2[i] = intPart % base2;
+        intPart /= base2;
         i++;
     }
     int j = 0;
+    while(decPart != 0){
+        decPart2[j] = decPart * base2;
+        decPart = decPart2[j] - (int)decPart2[j];
+        j++;
+    }
+    printf("The number in base %d is: ", base2);
+    for(int k = i - 1; k >= 0; k--){
+        printf("%d", intPart2[k]);
+    }
+    printf(".");
+    for(int k = 0; k < j; k++){
+        printf("%d", (int)decPart2[k]);
+    }
+    printf("\n");
+    return 0;
 }
