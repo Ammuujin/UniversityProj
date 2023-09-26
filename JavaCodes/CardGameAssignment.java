@@ -1,6 +1,4 @@
-//Code
 import java.util.Scanner;
-import java.util.Random;
 
 public class CardGameAssignment {
     static Card[] deck;// Card 20장을 저장하기 위한 배열
@@ -17,10 +15,10 @@ public class CardGameAssignment {
         //Game introduction
         System.out.println("This card is a game that plays against the dealer.");
         System.out.println("The dealer and the player are each given two cards, and the player with the higher card wins.");
-        System.out.println("Good Luck!\n");
+        System.out.println("Good Luck!");
+        System.out.println();
 
         //Game start from here
-
         //Getting the number of players 
         System.out.println("Enter the number of players: ");
         int N = 0;
@@ -39,7 +37,7 @@ public class CardGameAssignment {
             p[i].name = in.next();
             p[i].money = in.nextInt();
             if(p[i].money<0 || p[i].money==0){
-                System.out.println("Invalid game money. Enter again.");
+                System.out.println("Invalid amount of money. Enter again.");
                 System.out.println("Enter the player-"+(i+1)+" (name, game money): ");
                 p[i].name = in.next();
                 p[i].money = in.nextInt();
@@ -50,88 +48,95 @@ public class CardGameAssignment {
         int bet = 0;
         System.out.println("Enter the betting amount: ");
         bet = in.nextInt();
-        System.out.println("\n");
+        System.out.println();
 
         //Running the game
+        boolean gameStatus = true;
         do {
-            //Checking the player has enough money to play
+            //Checking if there are enough cards to play
+            if(count<=((N+1)*2)){
+                System.out.println("Not enough cards. ");
+                gameStatus = false;
+                break;
+            }
+
+            //Checking each player has enough money to play
             for(int i=0; i<N; i++){
                 if(p[i].money<bet){
-                    System.out.println(p[i].name+" does not have enough money to play.");
-                    System.out.println("Do you want to continue? yes or no");
-                    String s = in.next();
-                    boolean playerStatus = true;
-                    while(playerStatus){
-                        if(s!="yes" || s!="y" || s!="Yes" || s!="Y" || s!="YES"){ 
-                        System.out.println("Enter the money:");
-                        System.out.println(p[i].name+": ");
-                        p[i].money = in.nextInt();
-                    }else if(s!="no" || s!="n" || s!="No" || s!="N" || s!="NO"){
-                        System.out.println(p[i].name+" is out of the game.");
-                        p[i].money = 0;
-                        playerStatus = false;
-                    }else {
-                        System.out.println("Invalid input. Enter again.");
-                        System.out.println("Do you want to continue? yes or no");
-                        s = in.next();
-                    }
-                    }
-                    
+                    System.out.println(p[i].name+" has no enough money!\n");
+                    gameStatus = false;
                 }
             }
             
-            //Giving 2 random cards to dealer and each players
-            Card[] dealer = new Card[2];
-            Card[][] player = new Card[N][2];
-            for(int i=0; i<2; i++){
-                dealer[i] = deal();
-                for(int j=0; j<N; j++){
-                    player[j][i] = deal();
-                }
+            //Checking if the game can be continued or not    
+            if(gameStatus==false){
+                break;
             }
-
-            //Printing the cards of dealer and each players
-            for(int i=0; i<N; i++){
-                if(p[i].money == 0){
-                    System.out.println(p[i].name+" is out of the game.");
-
+            else{
+                //Giving 2 random cards to dealer and each players
+                Card[] dealer = new Card[2];
+                Card[][] player = new Card[N][2];
+                for(int i=0; i<2; i++){
+                    dealer[i] = deal();
+                    count--;
+                    for(int j=0; j<N; j++){
+                        player[j][i] = deal();
+                        count--;
+                    }
                 }
-                else{
+
+                //Printing the cards of dealer and each players
+                for(int i=0; i<N; i++){
                     System.out.println(p[i].name+" : ("+toString(player[i][0])+", "+toString(player[i][1])+")");
                 }
-            }
-            System.out.println("Dealer : ("+toString(dealer[0])+", "+toString(dealer[1])+")+\n");
-            
-            
+                System.out.println("Dealer : ("+toString(dealer[0])+", "+toString(dealer[1])+")");
+                System.out.println();
 
-
-
-            //Comparing dealer's card with each players' card and printing the result
-            for(int i=0; i<N; i++){
-                result = compare(dealer[0], player[i][0]);
-                if(result == 1){
-                    System.out.println(p[i].name+" won $"+bet+" ($"+(p[i].money+bet)+")");
-                    p[i].money += bet;
+                //Comparing dealer's card with each players' card and printing the result
+                for(int i=0; i<N; i++){
+                    result = compare(dealer[0], player[i][0]);
+                    if(result == 1){
+                        p[i].money += bet;
+                        System.out.println(p[i].name+" won $"+bet+" ($"+p[i].money+")");
+                        p[i].wins++;
+                    }
+                    else if(result == -1){
+                        p[i].money -= bet;
+                        System.out.println(p[i].name+" lost $"+bet+" ($"+(p[i].money)+")");
+                        p[i].losses++;
+                    }
+                    else if(result == 0){
+                        System.out.println(p[i].name+" tied ($"+p[i].money+")");
+                        p[i].ties++;
+                    }
+                    totalGamesPlayed++;
                 }
-                else if(result == -1){
-                    System.out.println(p[i].name+" lost $"+bet+" ($"+(p[i].money-bet)+")");
-                    p[i].money -= bet;
-                }
-                else if(result == 0){
-                    System.out.println(p[i].name+" tied ($"+p[i].money+")");
-                }
-            }
+                System.out.println();
 
-            //Asking if the player wants to continue or not
-            System.out.println("Continue? y");
-            String s = in.next();
-            if(s!="y"){
-                result = 1;
+                //Asking if the player wants to continue or not
+                while(gameStatus){
+                    System.out.println("Do you want to continue? Yes or No:");
+                    String s = in.next();
+                    if(s=="yes" || s=="y" || s=="Yes" || s=="Y" || s=="YES"){ 
+                        System.out.println();
+                        result = 0;
+                        gameStatus = true;
+                    }else if(s=="no" || s=="n" || s=="No" || s=="N" || s=="NO"){
+                        System.out.println();
+                        result = 1;
+                        gameStatus = false;
+                    }else {
+                        System.out.println("Invalid input! Enter again.\n");
+                    }
+                }
             }
         } while (result < 1);
         //Game end
         System.out.println("Game ended...");
-        System.out.println("Total games: ");
+        System.out.println("Total games: "+totalGamesPlayed);
+        for(int i=0; i<N; i++){
+            System.out.println(p[i].name+": " + p[i].wins+", " + p[i].losses + ", " + p[i].ties + "\n");
+        }
     }//end of main
 
     //Classes:
@@ -139,6 +144,9 @@ public class CardGameAssignment {
     static class player{
         String name;
         int money;
+        int wins;
+        int losses;
+        int ties;
     }
     //Card class
     static class Card{
@@ -209,6 +217,18 @@ public class CardGameAssignment {
         return result;
     }
 
+    //deal() method
+    static Card deal(){
+        Card c = new Card();
+        int suit;
+        int rank;
+        suit = (int)(Math.random()*4)+1;
+        rank = (int)(Math.random()*13)+1;
+        c.suit = suitInString(suit);
+        c.rank = rank;
+        return c;
+    }
+
     // suitInString() method
     static String suitInString(int suit){
         String s = "";
@@ -234,16 +254,4 @@ public class CardGameAssignment {
         }
         return s + " of " + c.suit;
     }
-
-    //deal() method
-    static Card deal(){
-        Card c = new Card();
-        int suit;
-        int rank;
-        suit = (int)(Math.random()*4)+1;
-        rank = (int)(Math.random()*13)+1;
-        c.suit = suitInString(suit);
-        c.rank = rank;
-        return c;
-    }
-}
+}//end of code
