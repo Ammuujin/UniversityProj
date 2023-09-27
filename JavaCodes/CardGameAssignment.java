@@ -1,8 +1,8 @@
 import java.util.Scanner;
 
 public class CardGameAssignment {
-    static Card[] deck;// Card 20장을 저장하기 위한 배열
-    static int count; // deck에 남은 카드의 수
+    static Card[] deck;// deck of cards
+    static int count; // number of cards are left in the deck
     public static void main(String[] args) {
         //Declaration
         deck = new Card[52];
@@ -10,7 +10,7 @@ public class CardGameAssignment {
         int result = 0;
         int totalGamesPlayed = 0;
         Scanner in = new Scanner(System.in);
-        initialize();//52cards를 deck에 저장
+        initialize();//52 different cards are initialized in the deck
         System.out.println("Games started...");
         //Game introduction
         System.out.println("This card is a game that plays against the dealer.");
@@ -22,26 +22,32 @@ public class CardGameAssignment {
         //Getting the number of players 
         System.out.println("Enter the number of players: ");
         int N = 0;
-        N = in.nextInt();
-        if(N<1 || N>5){
-            System.out.println("Invalid number of players. Enter again.");
-            System.out.println("Enter the number of players: ");
+        boolean validInput = false;
+        do {
             N = in.nextInt();
-        }
+            if(N<1 || N>5){
+                System.out.println("Invalid number of players. Enter again.");
+                System.out.println("Enter the number of players: ");
+            } else {
+                validInput = true;
+            }
+        } while (!validInput);
 
         //Getting information of players
         player[] p = new player[N];
         for(int i=0; i<N; i++){
             p[i] = new player();
             System.out.println("Enter the player-"+(i+1)+" (name, game money): ");
-            p[i].name = in.next();
-            p[i].money = in.nextInt();
-            if(p[i].money<0 || p[i].money==0){
-                System.out.println("Invalid amount of money. Enter again.");
-                System.out.println("Enter the player-"+(i+1)+" (name, game money): ");
-                p[i].name = in.next();
+            validInput = false;
+            do {
                 p[i].money = in.nextInt();
-            }
+                if(p[i].money<0 || p[i].money==0){
+                    System.out.println("Invalid amount of money. Enter again.");
+                    System.out.println("Enter the player-"+(i+1)+" (name, game money): ");
+                } else {
+                    validInput = true;
+                }
+            } while (!validInput);
         }
 
         //Getting bet amount
@@ -109,8 +115,9 @@ public class CardGameAssignment {
                         System.out.println(p[i].name+" tied ($"+p[i].money+")");
                         p[i].ties++;
                     }
-                    totalGamesPlayed++;
                 }
+                //Counting the total games played
+                totalGamesPlayed++;
                 System.out.println();
 
                 //Asking if the player wants to continue or not
@@ -131,11 +138,11 @@ public class CardGameAssignment {
                 }
             }
         } while (result < 1);
-        //Game end
+        //End part of the game
         System.out.println("Game ended...");
         System.out.println("Total games: "+totalGamesPlayed);
         for(int i=0; i<N; i++){
-            System.out.println(p[i].name+": " + p[i].wins+", " + p[i].losses + ", " + p[i].ties);
+            System.out.println(p[i].name+": " + p[i].wins+", " + p[i].losses + ", " + p[i].ties+", $"+ p[i].money);
         }
     }//end of main
 
@@ -184,83 +191,81 @@ public class CardGameAssignment {
     
     //compare() method
     static int compare(Card[] dealer, Card[] player){
-        int dealerSum = 0;
-        int playerSum = 0;
-        for(int i=0; i<2; i++){
-            if(dealer[i].rank==1){
-                dealerSum += 14;
-            }
-            else if(dealer[i].rank==11){
-                dealerSum += 11;
-            }
-            else if(dealer[i].rank==12){
-                dealerSum += 12;
-            }
-            else if(dealer[i].rank==13){
-                dealerSum += 13;
-            }
-            else{
-                dealerSum += dealer[i].rank;
-            }
-        }
-        for(int i=0; i<2; i++){
-            if(player[i].rank==1){
-                playerSum += 14;
-            }
-            else if(player[i].rank==11){
-                playerSum += 11;
-            }
-            else if(player[i].rank==12){
-                playerSum += 12;
-            }
-            else if(player[i].rank==13){
-                playerSum += 13;
-            }
-            else{
-                playerSum += player[i].rank;
-            }
-        }
-        if(dealerSum==playerSum){
-            for(int i=0; i<2; i++){
-                if(player[i].suit=="Spade"){
-                    playerSum += 4;
-                }
-                else if(player[i].suit=="Diamond"){
-                    playerSum += 3;
-                }
-                else if(player[i].suit=="Heart"){
-                    playerSum += 2;
-                }
-                else if(player[i].suit=="Club"){
-                    playerSum += 1;
-                }
-            }
-            for(int i=0; i<2; i++){
-                if(dealer[i].suit=="Spade"){
-                    dealerSum += 4;
-                }
-                else if(dealer[i].suit=="Diamond"){
-                    dealerSum += 3;
-                }
-                else if(dealer[i].suit=="Heart"){
-                    dealerSum += 2;
-                }
-                else if(dealer[i].suit=="Club"){
-                    dealerSum += 1;
-                }
-            }
-            if(dealerSum>playerSum){
-                return -1;
-            }
-            else if(dealerSum<playerSum){
-                return 1;
-            }   
-        }
-        else if(dealerSum>playerSum){
+        //check the cards are pair or not
+        if((dealer[0].rank==dealer[1].rank) && (player[0].rank!=player[1].rank)){
             return -1;
         }
-        else if(dealerSum<playerSum){
+        else if((player[0].rank==player[1].rank) && (dealer[0].rank!=dealer[1].rank)){
             return 1;
+        }
+        else if((player[0].rank==player[1].rank) && (dealer[0].rank==dealer[1].rank)){
+            return 0;
+        }
+        else {
+            //finding higher, lower rank card of dealer and player
+            int bigCardDealer = 0, smallCardDealer = 0;
+            int bigCardPlayer = 0, smallCardPlayer = 0;
+            //Dealer
+            if(dealer[0].rank>dealer[1].rank){
+                bigCardDealer=dealer[0].rank;
+                smallCardDealer=dealer[1].rank;
+            }
+            else{
+                bigCardDealer=dealer[1].rank;
+                smallCardDealer=dealer[0].rank;
+            }
+            //Player
+            if(player[0].rank>player[1].rank){
+                bigCardPlayer=player[0].rank;
+                smallCardPlayer=player[1].rank;
+            }
+            else{
+                bigCardPlayer=player[1].rank;
+                smallCardPlayer=player[0].rank;
+            }
+            //comparing the higher rank cards
+            if(bigCardDealer>bigCardPlayer){
+                return -1;
+            }
+            else if(bigCardDealer<bigCardPlayer){
+                return 1;
+            }
+            else{
+                //check compare the lower rank cards
+                if(smallCardDealer>smallCardPlayer){
+                    return -1;
+                }
+                else if(smallCardDealer<smallCardPlayer){
+                    return 1;
+                }
+                else{
+                    //if both card's rank are same, compare each player's suit of big card with dealer's suit of big card
+                    if(player[bigCardPlayer].suit.equals("Spade")){
+                        return -1;
+                    }
+                    else if(dealer[bigCardDealer].suit.equals("Spade")){
+                        return 1;
+                    }
+                    else if(player[bigCardPlayer].suit.equals("Diamond")){
+                        return -1;
+                    }
+                    else if(dealer[bigCardDealer].suit.equals("Diamond")){
+                        return 1;
+                    }
+                    else if(player[bigCardPlayer].suit.equals("Heart")){
+                        return -1;
+                    }
+                    else if(dealer[bigCardDealer].suit.equals("Heart")){
+                        return 1;
+                    }
+                    else if(player[bigCardPlayer].suit.equals("Club")){
+                        return -1;
+                    }
+                    else {
+                        return 1;
+                    }
+                }
+            }
         }
     }
 
