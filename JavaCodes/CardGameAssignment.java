@@ -94,7 +94,7 @@ public class CardGameAssignment {
 
                 //Comparing dealer's cards with each players' cards and printing the result
                 for(int i=0; i<N; i++){
-                    result = compare(player[i][0], player[i][1]);
+                    result = compare(dealer, player[i]);
                     if(result == 1){
                         p[i].money += bet;
                         System.out.println(p[i].name+" won $"+bet+" ($"+p[i].money+")");
@@ -182,40 +182,86 @@ public class CardGameAssignment {
         return false; // Not a duplicate
     }
     
-    // compare() method 
-    static int compare(Card c1, Card c2){
-        int result = 0;
-        //check
-        if(c1.rank > c2.rank){
-            result = 1;
-        }
-        else if(c1.rank < c2.rank){
-            result = -1;
-        }
-        else if (c1.rank == c2.rank && c1.suit!=c2.suit){
-            if(c1.suit=="Spade" && (c2.suit=="Diamond" || c2.suit=="Heart" || c2.suit=="Club")){
-                result = 1;
+    //compare() method
+    static int compare(Card[] dealer, Card[] player){
+        int dealerSum = 0;
+        int playerSum = 0;
+        for(int i=0; i<2; i++){
+            if(dealer[i].rank==1){
+                dealerSum += 14;
             }
-            else if(c2.suit=="Spade" && (c1.suit=="Diamond" || c1.suit=="Heart" || c1.suit=="Club")){
-                result = -1;
+            else if(dealer[i].rank==11){
+                dealerSum += 11;
             }
-            else if(c1.suit=="Diamond" && (c2.suit=="Heart" || c2.suit=="Club")){
-                result = 1;
+            else if(dealer[i].rank==12){
+                dealerSum += 12;
             }
-            else if(c2.suit=="Diamond" && (c1.suit=="Heart" || c1.suit=="Club")){
-                result = -1;
+            else if(dealer[i].rank==13){
+                dealerSum += 13;
             }
-            else if(c1.suit=="Heart" && c2.suit=="Club"){
-                result = 1;
-            }
-            else if(c2.suit=="Heart" && c1.suit=="Club"){
-                result = -1;
+            else{
+                dealerSum += dealer[i].rank;
             }
         }
-        else if(c1.rank == c2.rank && c1.suit==c2.suit){
-            result = 0;
+        for(int i=0; i<2; i++){
+            if(player[i].rank==1){
+                playerSum += 14;
+            }
+            else if(player[i].rank==11){
+                playerSum += 11;
+            }
+            else if(player[i].rank==12){
+                playerSum += 12;
+            }
+            else if(player[i].rank==13){
+                playerSum += 13;
+            }
+            else{
+                playerSum += player[i].rank;
+            }
         }
-        return result;
+        if(dealerSum==playerSum){
+            for(int i=0; i<2; i++){
+                if(player[i].suit=="Spade"){
+                    playerSum += 4;
+                }
+                else if(player[i].suit=="Diamond"){
+                    playerSum += 3;
+                }
+                else if(player[i].suit=="Heart"){
+                    playerSum += 2;
+                }
+                else if(player[i].suit=="Club"){
+                    playerSum += 1;
+                }
+            }
+            for(int i=0; i<2; i++){
+                if(dealer[i].suit=="Spade"){
+                    dealerSum += 4;
+                }
+                else if(dealer[i].suit=="Diamond"){
+                    dealerSum += 3;
+                }
+                else if(dealer[i].suit=="Heart"){
+                    dealerSum += 2;
+                }
+                else if(dealer[i].suit=="Club"){
+                    dealerSum += 1;
+                }
+            }
+            if(dealerSum>playerSum){
+                return -1;
+            }
+            else if(dealerSum<playerSum){
+                return 1;
+            }   
+        }
+        else if(dealerSum>playerSum){
+            return -1;
+        }
+        else if(dealerSum<playerSum){
+            return 1;
+        }
     }
 
     //deal() method
