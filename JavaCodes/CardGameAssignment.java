@@ -116,12 +116,12 @@ public class CardGameAssignment {
                 //Asking if the player wants to continue or not
                 while(gameStatus){
                     System.out.println("Do you want to continue? Yes or No:");
-                    String s = in.next();
-                    if(s=="yes" || s=="y" || s=="Yes" || s=="Y" || s=="YES"){ 
+                    String s = in.next().toLowerCase(); // convert input to lowercase
+                    if(s.equals("yes") || s.equals("y")){ 
                         System.out.println();
                         result = 0;
-                        gameStatus = true;
-                    }else if(s=="no" || s=="n" || s=="No" || s=="N" || s=="NO"){
+                        break;
+                    }else if(s.equals("no") || s.equals("n")){
                         System.out.println();
                         result = 1;
                         gameStatus = false;
@@ -135,7 +135,7 @@ public class CardGameAssignment {
         System.out.println("Game ended...");
         System.out.println("Total games: "+totalGamesPlayed);
         for(int i=0; i<N; i++){
-            System.out.println(p[i].name+": " + p[i].wins+", " + p[i].losses + ", " + p[i].ties + "\n");
+            System.out.println(p[i].name+": " + p[i].wins+", " + p[i].losses + ", " + p[i].ties);
         }
     }//end of main
 
