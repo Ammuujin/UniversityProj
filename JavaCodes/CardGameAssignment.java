@@ -92,9 +92,9 @@ public class CardGameAssignment {
                 System.out.println("Dealer : ("+toString(dealer[0])+", "+toString(dealer[1])+")");
                 System.out.println();
 
-                //Comparing dealer's card with each players' card and printing the result
+                //Comparing dealer's cards with each players' cards and printing the result
                 for(int i=0; i<N; i++){
-                    result = compare(dealer[0], player[i][0]);
+                    result = compare(player[i][0], player[i][1]);
                     if(result == 1){
                         p[i].money += bet;
                         System.out.println(p[i].name+" won $"+bet+" ($"+p[i].money+")");
@@ -185,6 +185,7 @@ public class CardGameAssignment {
     // compare() method 
     static int compare(Card c1, Card c2){
         int result = 0;
+        //check
         if(c1.rank > c2.rank){
             result = 1;
         }
