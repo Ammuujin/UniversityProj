@@ -38,6 +38,7 @@ public class CardGameAssignment {
         for(int i=0; i<N; i++){
             p[i] = new player();
             System.out.println("Enter the player-"+(i+1)+" (name, game money): ");
+            p[i].name = in.next();
             validInput = false;
             do {
                 p[i].money = in.nextInt();
