@@ -59,16 +59,9 @@ public class UltimateTexasHoldem {
         //Running the game
         boolean gameStatus = true;
         do {
-            //Checking if there are enough cards to play
-            // if(count<=((N+1)*2)){
-            //     System.out.println("Not enough cards. ");
-            //     gameStatus = false;
-            //     break;
-            // }
-
             //52 different cards are initialized in the deck
             count = 52;
-            initialize();
+            initialize();   
 
             //Checking each player has enough money to play
             for(int i=0; i<N; i++){
@@ -109,16 +102,26 @@ public class UltimateTexasHoldem {
                 }
                 System.out.println();
 
-                //Checking dealer's card any compliment with the table cards
-                int dealerCompliment = 0;
-
-
                 //Printing the cards of dealer and each players
                 for(int i=0; i<N; i++){
                     System.out.println(p[i].name+" : ("+toString(player[i][0])+", "+toString(player[i][1])+")");
                 }
                 System.out.println("Dealer : ("+toString(dealer[0])+", "+toString(dealer[1])+")");
                 System.out.println();
+
+                //Checking dealer's cards are flush or not
+                boolean dealerFlush = checkDealerCard(dealer, table);
+
+                //Checking each player's cards are flush or not
+                boolean[] playerFlush = new boolean[N];
+                for(int i=0; i<N; i++){
+                    playerFlush[i] = checkPlayerCard(player[i], table);
+                }
+
+                //compare dealer's flush cards with each flush players' cards
+                // if((dealerFlush==true) && ){
+
+                // }
 
                 //Comparing dealer's cards with each players' cards and printing the result
                 for(int i=0; i<N; i++){
@@ -211,50 +214,67 @@ public class UltimateTexasHoldem {
         return false; // Not a duplicate
     }
     
-    //compliment checker method
-    static boolean complimentChecker(Card[] dealer, Card[] player, Card[] table){
-        int dealerCompliment = 0;
-        int playerCompliment = 0;
-        for(int i=0; i<2; i++){
+    //checking dealer's cards
+    static boolean checkDealerCard(Card[] dealer, Card[] table){
+        int count = 0;
+        //checking dealer's cards
+        if(dealer[0].suit.equals(dealer[1].suit)){
             for(int j=0; j<5; j++){
-                if(dealer[i].rank==table[j].rank){
-                    dealerCompliment++;
-                }
-                if(player[i].rank==table[j].rank){
-                    playerCompliment++;
+                if(dealer[0].suit.equals(table[j].suit)){
+                count++;
                 }
             }
-        }
-        if(dealerCompliment==0 && playerCompliment==0){
-            return false;
-        }
-        else if(dealerCompliment>playerCompliment){
-            return true;
-        }
-        else if(dealerCompliment<playerCompliment){
-            return false;
-        }
-        else{
-            if(dealer[0].rank>player[0].rank){
+            if(count==3){
                 return true;
             }
-            else if(dealer[0].rank<player[0].rank){
+            else{
                 return false;
             }
-            else{
-                if(dealer[0].suit.equals("Spade")){
-                    return true;
+        }
+        else{
+            for(int i=0; i<2; i++){
+                for(int j=0; j<5; j++){
+                    if(dealer[i].suit.equals(table[j].suit)){
+                        count++;
+                    }
+                    if(count==4){
+                        return true;
+                    }
                 }
-                else if(dealer[0].suit.equals("Diamond")){
-                    return false;
-                }
-                else if(dealer[0].suit.equals("Heart")){
-                    return true;
-                }
-                else{
-                    return false;
+                count = 0;
+            }
+            return false;
+        }
+    }
+    //checking player's cards
+    static boolean checkPlayerCard(Card[] player, Card[] table){
+        int count = 0;
+        if(player[0].suit.equals(player[1].suit)){
+            for(int j=0; j<5; j++){
+                if(player[0].suit.equals(table[j].suit)){
+                count++;
                 }
             }
+            if(count==3){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        else{
+            for(int i=0; i<2; i++){
+                for(int j=0; j<5; j++){
+                    if(player[i].suit.equals(table[j].suit)){
+                        count++;
+                    }
+                    if(count==4){
+                        return true;
+                    }
+                }
+                count = 0;
+            }
+            return false;
         }
     }
 
