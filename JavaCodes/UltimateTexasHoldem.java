@@ -111,7 +111,7 @@ public class UltimateTexasHoldem {
 
                 //Checking dealer's card any compliment with the table cards
                 int dealerCompliment = 0;
-                
+
 
                 //Printing the cards of dealer and each players
                 for(int i=0; i<N; i++){
@@ -211,6 +211,53 @@ public class UltimateTexasHoldem {
         return false; // Not a duplicate
     }
     
+    //compliment checker method
+    static boolean complimentChecker(Card[] dealer, Card[] player, Card[] table){
+        int dealerCompliment = 0;
+        int playerCompliment = 0;
+        for(int i=0; i<2; i++){
+            for(int j=0; j<5; j++){
+                if(dealer[i].rank==table[j].rank){
+                    dealerCompliment++;
+                }
+                if(player[i].rank==table[j].rank){
+                    playerCompliment++;
+                }
+            }
+        }
+        if(dealerCompliment==0 && playerCompliment==0){
+            return false;
+        }
+        else if(dealerCompliment>playerCompliment){
+            return true;
+        }
+        else if(dealerCompliment<playerCompliment){
+            return false;
+        }
+        else{
+            if(dealer[0].rank>player[0].rank){
+                return true;
+            }
+            else if(dealer[0].rank<player[0].rank){
+                return false;
+            }
+            else{
+                if(dealer[0].suit.equals("Spade")){
+                    return true;
+                }
+                else if(dealer[0].suit.equals("Diamond")){
+                    return false;
+                }
+                else if(dealer[0].suit.equals("Heart")){
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+        }
+    }
+
     //compare() method
     static int compare(Card[] dealer, Card[] player){
         //check the cards are pair or not
