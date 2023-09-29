@@ -1,19 +1,18 @@
 import java.util.Scanner;
 
-public class CardGameAssignment {
+public class UltimateTexasHoldem {
     static Card[] deck;// deck of cards
     static int count; // number of cards are left in the deck
     public static void main(String[] args) {
         //Declaration
         deck = new Card[52];
-        count = 52;
+        count = 0;
         int result = 0;
         int totalGamesPlayed = 0;
         Scanner in = new Scanner(System.in);
-        initialize();//52 different cards are initialized in the deck
-        System.out.println("Games started...");
+        System.out.println("Welcome to Ultimate Texas Holdem!");
         //Game introduction
-        System.out.println("This is a card game between the dealer and the player.");
+        System.out.println("This is a card game between the dealer and the players.");
         System.out.println("The dealer and the player are each given two cards, and the player with the higher card wins.");
         System.out.println("Good Luck!");
         System.out.println();
@@ -25,7 +24,7 @@ public class CardGameAssignment {
         boolean validInput = false;
         do {
             N = in.nextInt();
-            if(N<1 || N>5){
+            if(N<1 || N>10){
                 System.out.println("Invalid number of players. Enter again.");
                 System.out.println("Enter the number of players: ");
             } else {
@@ -61,11 +60,15 @@ public class CardGameAssignment {
         boolean gameStatus = true;
         do {
             //Checking if there are enough cards to play
-            if(count<=((N+1)*2)){
-                System.out.println("Not enough cards. ");
-                gameStatus = false;
-                break;
-            }
+            // if(count<=((N+1)*2)){
+            //     System.out.println("Not enough cards. ");
+            //     gameStatus = false;
+            //     break;
+            // }
+
+            //52 different cards are initialized in the deck
+            count = 52;
+            initialize();
 
             //Checking each player has enough money to play
             for(int i=0; i<N; i++){
@@ -91,6 +94,24 @@ public class CardGameAssignment {
                         count--;
                     }
                 }
+
+                //Showing 5 random card on the table
+                Card[] table = new Card[5];
+                for(int i=0; i<5; i++){
+                    table[i] = deal();
+                    count--;
+                }
+
+                //Printing the cards on the table
+                System.out.println("Table cards: ");
+                for(int i=0; i<5; i++){
+                    System.out.println(toString(table[i]));
+                }
+                System.out.println();
+
+                //Checking dealer's card any compliment with the table cards
+                int dealerCompliment = 0;
+                
 
                 //Printing the cards of dealer and each players
                 for(int i=0; i<N; i++){
