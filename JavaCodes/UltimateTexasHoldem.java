@@ -118,6 +118,54 @@ public class UltimateTexasHoldem {
                     playerFlush[i] = checkPlayerCardFlush(player[i], table);
                 }
 
+                //Checking dealer's cards are 4 of kind or not
+                boolean dealerFourKind = checkDealerCardFourKind(dealer, table);
+                
+                //Checking each player's cards are 4 of kind or not
+                boolean[] playerFourKind = new boolean[N];
+                for(int i=0; i<N; i++){
+                    playerFourKind[i] = checkPlayerCardFourKind(player[i], table);
+                }
+
+                //Checking dealer's cards are 3 of kind or not
+                boolean dealerThreeKind = checkDealerCardThreeKind(dealer, table);
+
+                //Checking each player's cards are 3 of kind or not
+                boolean[] playerThreeKind = new boolean[N];
+                for(int i=0; i<N; i++){
+                    playerThreeKind[i] = checkPlayerCardThreeKind(player[i], table);
+                }
+
+                //Checking dealer's cards are two pair or not
+                boolean dealerTwoPair = checkDealerCardTwoPair(dealer, table);
+
+                //Checking each player's cards are two pair or not
+                boolean[] playerTwoPair = new boolean[N];
+                for(int i=0; i<N; i++){
+                    playerTwoPair[i] = checkPlayerCardTwoPair(player[i], table);
+                }
+
+                //Checking dealer's cards are one pair or not
+                boolean dealerOnePair = checkDealerCardOnePair(dealer, table);
+
+                //Checking each player's cards are one pair or not
+                boolean[] playerOnePair = new boolean[N];
+                for(int i=0; i<N; i++){
+                    playerOnePair[i] = checkPlayerCardOnePair(player[i], table);
+                }
+
+                //Checking dealer's cards are full house or not
+                boolean dealerFullHouse = checkDealerCardFullHouse(dealer, table);
+
+                //Checking each player's cards are full house or not
+                boolean[] playerFullHouse = new boolean[N];
+                for(int i=0; i<N; i++){
+                    playerFullHouse[i] = checkPlayerCardFullHouse(player[i], table);
+                }
+
+                //Checking dealer's cards are straight or not
+                //...
+                
                 //Comparing dealer's cards with each players' cards and printing the result
                 for(int i=0; i<N; i++){
                     result = compare(dealer, player[i]);
@@ -587,7 +635,7 @@ public class UltimateTexasHoldem {
 
     //Straight:
     //checking dealer's cards are straight or not
-    
+
 
     //High Card:
     //compare() method
