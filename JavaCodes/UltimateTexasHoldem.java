@@ -110,18 +110,13 @@ public class UltimateTexasHoldem {
                 System.out.println();
 
                 //Checking dealer's cards are flush or not
-                boolean dealerFlush = checkDealerCard(dealer, table);
+                boolean dealerFlush = checkDealerCardFlush(dealer, table);
 
                 //Checking each player's cards are flush or not
                 boolean[] playerFlush = new boolean[N];
                 for(int i=0; i<N; i++){
-                    playerFlush[i] = checkPlayerCard(player[i], table);
+                    playerFlush[i] = checkPlayerCardFlush(player[i], table);
                 }
-
-                //compare dealer's flush cards with each flush players' cards
-                // if((dealerFlush==true) && ){
-
-                // }
 
                 //Comparing dealer's cards with each players' cards and printing the result
                 for(int i=0; i<N; i++){
@@ -214,8 +209,9 @@ public class UltimateTexasHoldem {
         return false; // Not a duplicate
     }
     
-    //checking dealer's cards
-    static boolean checkDealerCard(Card[] dealer, Card[] table){
+    //Flush:
+    //checking dealer's cards are flush or not
+    static boolean checkDealerCardFlush(Card[] dealer, Card[] table){
         int count = 0;
         //checking dealer's cards
         if(dealer[0].suit.equals(dealer[1].suit)){
@@ -246,8 +242,9 @@ public class UltimateTexasHoldem {
             return false;
         }
     }
-    //checking player's cards
-    static boolean checkPlayerCard(Card[] player, Card[] table){
+
+    //checking player's cards are flush or not
+    static boolean checkPlayerCardFlush(Card[] player, Card[] table){
         int count = 0;
         if(player[0].suit.equals(player[1].suit)){
             for(int j=0; j<5; j++){
@@ -278,6 +275,173 @@ public class UltimateTexasHoldem {
         }
     }
 
+    //Four of a kind:
+    //checking dealer's cards are 4 of kind or not
+    static boolean checkDealerCardFourKind(Card[] dealer, Card[] table){
+        int count = 0;
+        //checking dealer's cards
+        if(dealer[0].rank==dealer[1].rank){
+            for(int j=0; j<5; j++){
+                if(dealer[0].rank==table[j].rank){
+                count++;
+                }
+            }
+            if(count==2){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        else{
+            for(int i=0; i<2; i++){
+                for(int j=0; j<5; j++){
+                    if(dealer[i].rank==table[j].rank){
+                        count++;
+                    }
+                    if(count==3){
+                        return true;
+                    }
+                }
+                count = 0;
+            }
+            return false;
+        }
+    }
+
+    //checking player's cards are 4 of kind or not
+    static boolean checkPlayerCardFourKind(Card[] player, Card[] table){
+        int count = 0;
+        if(player[0].rank==player[1].rank){
+            for(int j=0; j<5; j++){
+                if(player[0].rank==table[j].rank){
+                count++;
+                }
+            }
+            if(count==2){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        else{
+            for(int i=0; i<2; i++){
+                for(int j=0; j<5; j++){
+                    if(player[i].rank==table[j].rank){
+                        count++;
+                    }
+                    if(count==3){
+                        return true;
+                    }
+                }
+                count = 0;
+            }
+            return false;
+        }
+    }
+
+    //Three of a kind:
+    //checking dealer's cards are 3 of kind or not
+    static boolean checkDealerCardThreeKind(Card[] dealer, Card[] table){
+        int count = 0;
+        //checking dealer's cards
+        if(dealer[0].rank==dealer[1].rank){
+            for(int j=0; j<5; j++){
+                if(dealer[0].rank==table[j].rank){
+                count++;
+                }
+            }
+            if(count==1){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        else{
+            for(int i=0; i<2; i++){
+                for(int j=0; j<5; j++){
+                    if(dealer[i].rank==table[j].rank){
+                        count++;
+                    }
+                    if(count==2){
+                        return true;
+                    }
+                }
+                count = 0;
+            }
+            return false;
+        }
+    }
+
+    //checking player's cards are 3 of kind or not
+    static boolean checkPlayerCardThreeKind(Card[] player, Card[] table){
+        int count = 0;
+        if(player[0].rank==player[1].rank){
+            for(int j=0; j<5; j++){
+                if(player[0].rank==table[j].rank){
+                count++;
+                }
+            }
+            if(count==1){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        else{
+            for(int i=0; i<2; i++){
+                for(int j=0; j<5; j++){
+                    if(player[i].rank==table[j].rank){
+                        count++;
+                    }
+                    if(count==2){
+                        return true;
+                    }
+                }
+                count = 0;
+            }
+            return false;
+        }
+    }
+
+    //Two pair:
+    //checking dealer's cards are two pair or not
+    static boolean checkDealerCardTwoPair(Card[] dealer, Card[] table){
+        int count = 0;
+        //checking dealer's cards
+        if(dealer[0].rank==dealer[1].rank){
+            for(int j=0; j<5; j++){
+                if(dealer[0].rank==table[j].rank){
+                count++;
+                }
+            }
+            if(count==0){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        else{
+            for(int i=0; i<2; i++){
+                for(int j=0; j<5; j++){
+                    if(dealer[i].rank==table[j].rank){
+                        count++;
+                    }
+                    if(count==1){
+                        return true;
+                    }
+                }
+                count = 0;
+            }
+            return false;
+        }
+    }
+
+    //High Card:
     //compare() method
     static int compare(Card[] dealer, Card[] player){
         //check the cards are pair or not
