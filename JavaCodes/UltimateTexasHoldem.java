@@ -441,6 +441,154 @@ public class UltimateTexasHoldem {
         }
     }
 
+    //checking player's cards are two pair or not
+    static boolean checkPlayerCardTwoPair(Card[] player, Card[] table){
+        int count = 0;
+        if(player[0].rank==player[1].rank){
+            for(int j=0; j<5; j++){
+                if(player[0].rank==table[j].rank){
+                count++;
+                }
+            }
+            if(count==0){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        else{
+            for(int i=0; i<2; i++){
+                for(int j=0; j<5; j++){
+                    if(player[i].rank==table[j].rank){
+                        count++;
+                    }
+                    if(count==1){
+                        return true;
+                    }
+                }
+                count = 0;
+            }
+            return false;
+        }
+    }
+
+    //One pair:
+    //checking dealer's cards are one pair or not
+    static boolean checkDealerCardOnePair(Card[] dealer, Card[] table){
+        int count = 0;
+        //checking dealer's cards
+        if(dealer[0].rank==dealer[1].rank){
+                return true;
+        }
+        else{
+            for(int i=0; i<2; i++){
+                for(int j=0; j<5; j++){
+                    if(dealer[i].rank==table[j].rank){
+                        count++;
+                    }
+                    if(count==1){
+                        return true;
+                    }
+                }
+                count = 0;
+            }
+            return false;
+        }
+    }
+
+    //checking player's cards are one pair or not
+    static boolean checkPlayerCardOnePair(Card[] player, Card[] table){
+        int count = 0;
+        if(player[0].rank==player[1].rank){
+            return true;
+        }
+        else{
+            for(int i=0; i<2; i++){
+                for(int j=0; j<5; j++){
+                    if(player[i].rank==table[j].rank){
+                        count++;
+                    }
+                    if(count==1){
+                        return true;
+                    }
+                }
+                count = 0;
+            }
+            return false;
+        }
+    }
+
+    //Full House:
+    //checking dealer's cards are full house or not
+    static boolean checkDealerCardFullHouse(Card[] dealer, Card[] table){
+        int count = 0;
+        //checking dealer's cards
+        if(dealer[0].rank==dealer[1].rank){
+            for(int j=0; j<5; j++){
+                if(dealer[0].rank==table[j].rank){
+                count++;
+                }
+            }
+            if(count==2){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        else{
+            for(int i=0; i<2; i++){
+                for(int j=0; j<5; j++){
+                    if(dealer[i].rank==table[j].rank){
+                        count++;
+                    }
+                    if(count==3){
+                        return true;
+                    }
+                }
+                count = 0;
+            }
+            return false;
+        }
+    }
+
+    //checking player's cards are full house or not
+    static boolean checkPlayerCardFullHouse(Card[] player, Card[] table){
+        int count = 0;
+        if(player[0].rank==player[1].rank){
+            for(int j=0; j<5; j++){
+                if(player[0].rank==table[j].rank){
+                count++;
+                }
+            }
+            if(count==2){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        else{
+            for(int i=0; i<2; i++){
+                for(int j=0; j<5; j++){
+                    if(player[i].rank==table[j].rank){
+                        count++;
+                    }
+                    if(count==3){
+                        return true;
+                    }
+                }
+                count = 0;
+            }
+            return false;
+        }
+    }
+
+    //Straight:
+    //checking dealer's cards are straight or not
+    
+
     //High Card:
     //compare() method
     static int compare(Card[] dealer, Card[] player){
