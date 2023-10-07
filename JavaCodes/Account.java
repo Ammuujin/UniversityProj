@@ -1,4 +1,6 @@
 // Account.java
+//package Week5;
+
 public class Account {
     private int acctNo; 
     private int balance;
@@ -47,7 +49,7 @@ public class Account {
     public static void main(String[] args) {
         Account acct1 = new Account(1234, 10000); 
         Account acct2 = new Account(2345, 20000); 
-        // System.out.printf("Account %d: $%d\n", acct1.getAcctNo(), acct1.getBalance());
+        // System.out.printf("Account %d: $%d\n", acct1.getAcctNo(), acct1.getBalance()+"\n");
         // System.out.printf("Account %d: $%d\n", acct2.getAcctNo(), acct2.getBalance());
         System.out.println(acct1.toString());
         System.out.println(acct2.toString());

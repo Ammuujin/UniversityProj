@@ -1,3 +1,5 @@
+//package Week5;
+
 public class CardGame {
     static Card[] deck;// Card 20장을 저장하기 위한 배열
     static int count; // deck에 남은 카드의 수
@@ -20,10 +22,10 @@ public class CardGame {
             System.out.println("Dealer: "+dealer.toString()); 
             result = player.compareTo(dealer);
             if(result > 0){
-                System.out.println("Winner Player: "+toString(player));
+                System.out.println("Winner is Player");
             }
             else if(result < 0){
-                System.out.println("Winner Dealer: "+toString(dealer));
+                System.out.println("Winner is Dealer");
             }
             else{
                 System.out.println("Tie!");
