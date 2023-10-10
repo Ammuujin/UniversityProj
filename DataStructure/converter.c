@@ -11,17 +11,20 @@ int task2(char *number, int base);
 
 // Main function
 int main() {
-    int task, base;
-    char number[100];
+    int task, x; // task: 1 for task 1, 2 for task 2, x: base number, number: decimal number
+    char d[100];
     printf("Enter your inputs: \n ");
     scanf("%d", &task);
-    scanf("%s %d", number, &base);
-    if (task == 1) {
-        task1(atoi(number), base);
-    } else if (task == 2) {
-        task2(number, base);
-    } else {
-        printf("Invalid task number\n");
+    scanf("%s %d", d, &x);
+    if(atoi(d) >= 0 && x>0) {
+        if (task == 1) {
+            task1(atoi(d), x);
+        } else if (task == 2) {
+            task2(d, x);
+        }
+    }
+    else {
+        printf("Invalid inputs! check them.\n");
     }
     return 0;
 }
