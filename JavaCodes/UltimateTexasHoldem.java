@@ -65,7 +65,7 @@ public class UltimateTexasHoldem {
 
             //Checking each player has enough money to play
             for(int i=0; i<N; i++){
-                if(p[i].money<bet){
+                if(p[i].money < bet && bet > 0){
                     System.out.println(p[i].name+" has no enough money!\n");
                     gameStatus = false;
                 }
@@ -232,18 +232,14 @@ public class UltimateTexasHoldem {
     //Methods:
     // initialize() method
     static void initialize() {
-        int suit;
-        int rank;
-        for (int i = 0; i < 20; i++) {
-            Card c;
-            do {
-                suit = (int)(Math.random() * 4) + 1;
-                rank = (int)(Math.random() * 13) + 1;
-                c = new Card();
+        count = 0;
+        for (int suit = 1; suit <= 4; suit++) {
+            for (int rank = 1; rank <= 13; rank++) {
+                Card c = new Card();
                 c.suit = suitInString(suit);
                 c.rank = rank;
-            } while (isDuplicate(c));
-            deck[i] = c;
+                deck[count++] = c;
+            }
         }
     }
     
@@ -719,17 +715,18 @@ public class UltimateTexasHoldem {
     }
 
     //deal() method
-    static Card deal(){
-        Card c = new Card();
-        int suit;
-        int rank;
-        suit = (int)(Math.random()*4)+1;
-        rank = (int)(Math.random()*13)+1;
-        c.suit = suitInString(suit);
-        c.rank = rank;
+    static Card deal() {
+        if (count == 0) return null;
+        int index = (int)(Math.random() * count);
+        Card c = deck[index];
+        for (int i = index; i < count - 1; i++) {
+            deck[i] = deck[i + 1];
+        }
+        deck[count - 1] = null;
+        count--;
         return c;
     }
-
+    
     // suitInString() method
     static String suitInString(int suit){
         String s = "";
