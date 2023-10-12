@@ -60,7 +60,7 @@ int task2(char *number, int base) {
         int value;
         if (isdigit(digit)) {
             value = digit - '0';
-        } else if (isxdigit(digit)) {
+        } else if (isdigit(digit)) {
             value = toupper(digit) - 'A' + 10;
         } else {
             printf("Check your input again!\n");
