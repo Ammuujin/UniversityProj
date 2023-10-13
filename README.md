@@ -1,14 +1,14 @@
-# These codes are feel free to use it.
-# -------------------------------------------
-# Data Structure Codes in C:
-# Converter that decimal number to any base number. It also can do it reversely.
-# Parentheses Checking Algorithm.
-# Mathematical operation of Complex number.
-# -------------------------------------------
-# Java Codes:
-# CardGame:
-# Texas Poker.
-# Object-oriented programming examples.
+ These codes are feel free to use it.
+ -------------------------------------------
+ Data Structure Codes in C:
+ Converter that decimal number to any base number. It also can do it reversely.
+ Parentheses Checking Algorithm.
+ Mathematical operation of Complex number.
+ -------------------------------------------
+ Java Codes:
+ CardGame:
+ Texas Poker.
+ Object-oriented programming examples.
 # -------------------------------------------
 # Python Codes:
 # Searching algorithms:
