@@ -4,8 +4,7 @@ This repository contains various codes for data structures, algorithms, and prog
 
 ## Data Structure Codes in C:
 
-- **Number Converters**:
-  - Converter that changes a decimal number to any base number. It can also perform the reverse operation.
+- **Number Converters**: Converter that changes a decimal number to any base number. It can also perform the reverse operation.
 
 - **Parentheses Checker**: Algorithm to check for balanced parentheses in an expression.
 
@@ -39,8 +38,8 @@ This repository contains various codes for data structures, algorithms, and prog
 5. Insertion Sort
 ... and more!
 
-- **Miscellaneous**:
+### Miscellaneous:
   - Various other Python codes.
 
-- **Chatbot AI**:
+### Chatbot AI:
   - A chatbot named "LoveAdviceChatbot" written in Python.

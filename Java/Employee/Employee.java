@@ -24,4 +24,8 @@ public class Employee {
     public String toString() {
         return name + "  :  " + salary + "  :  " + hireDay;
     }
+    public void setHireDay(Date d)
+    {
+        hireDay = d;
+    }
 }//End of class Employee
