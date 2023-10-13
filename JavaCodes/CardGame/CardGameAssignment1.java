@@ -1,6 +1,7 @@
+package CardGame;
 import java.util.Scanner;
 
-public class CardGameAssignment {
+public class CardGameAssignment1 {
     static Card[] deck;// deck of cards
     static int count; // number of cards are left in the deck
     public static void main(String[] args) {
