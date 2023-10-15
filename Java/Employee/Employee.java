@@ -9,10 +9,10 @@ public class Employee {
         salary = s;
         hireDay = new Date(year, month, day);
     }
-    public Employee(String n, double s, Date date) {
-        name = n;
-        salary = s;
-        hireDay = date;
+    public Employee(String string, double d, Date d2) {
+        name = string;
+        salary = d;
+        hireDay = d2;
     }
     public String getName() { return name; }
     public double getSalary() { return salary; }
@@ -24,8 +24,5 @@ public class Employee {
     public String toString() {
         return name + "  :  " + salary + "  :  " + hireDay;
     }
-    public void setHireDay(Date d)
-    {
-        hireDay = d;
-    }
+    
 }//End of class Employee
