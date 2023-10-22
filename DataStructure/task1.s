@@ -11,15 +11,20 @@ stack_top:
 
 main:
     la sp, stack_top
-    la a0, prompt
+    la a0, task_prompt   ; Prompt for task number
     li a7, 4
     ecall
     li a7, 5
     ecall
     sw a0, task
-    la a0, d
-    li a1, 100
-    li a7, 8
+    la a0, number_prompt ; Prompt for number
+    li a7, 4
+    ecall
+    li a7, 5
+    ecall
+    sw a0, d
+    la a0, base_prompt   ; Prompt for base
+    li a7, 4
     ecall
     li a7, 5
     ecall
@@ -29,7 +34,10 @@ main:
     beq a0, a1, convert_decimal_to_base
     li a1, 2
     beq a0, a1, convert_base_to_decimal
-    li a7, 10
+    la a0, invalid_task_message ; Feedback for invalid task number
+    li a7, 4
+    ecall
+    li a7, 10  ; Exit
     ecall
 
 convert_decimal_to_base:
@@ -143,8 +151,14 @@ no_neg_decimal:
     ecall
 
 end_program:
-    li a7, 10
+    la a0, program_complete_message ; Feedback for program completion
+    li a7, 4
+    ecall
+    li a7, 10  ; Exit
     ecall
 
-prompt: .asciz "Enter your inputs: \n"
-new_line: .asciz "\n"
+task_prompt:   .asciz "Select a task (1: Decimal to Base, 2: Base to Decimal): "
+number_prompt: .asciz "Enter the number: "
+base_prompt:   .asciz "Enter the base (between 2 and 36 inclusive): "
+invalid_task_message: .asciz "Invalid task number selected.\n"
+program_complete_message: .asciz "Program completed successfully!\n"
