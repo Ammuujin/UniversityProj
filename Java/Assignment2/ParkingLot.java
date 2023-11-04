@@ -2,7 +2,7 @@ package Assignment2;
 
 import java.util.Scanner;
 
-public class main {
+public class ParkingLot {
     public static void main(String[] args) {
         int numSpots = 0;
         int feeMonthly = 0;
