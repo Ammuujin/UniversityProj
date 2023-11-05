@@ -9,5 +9,12 @@ class Resident {
         this.phoneNumber = phoneNumber;
     }
 
-    // Getters and possibly setters if needed
+    public String getName() {
+        return name;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
 }
+
