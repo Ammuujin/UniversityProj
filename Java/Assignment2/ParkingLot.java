@@ -1,5 +1,5 @@
 package Assignment2;
-
+//ParkingLot.java
 import java.util.Scanner;
 
 public class ParkingLot {

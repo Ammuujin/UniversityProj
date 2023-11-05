@@ -1,5 +1,5 @@
 package Assignment2;
-
+//Resident.java
 class Resident {
     private String name;
     private String phoneNumber;

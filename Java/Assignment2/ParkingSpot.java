@@ -1,5 +1,5 @@
 package Assignment2;
-
+//ParkingSpot.java
 class ParkingSpot {
     private boolean isOccupied;
     private String carPlate; // or another identifier for a car
