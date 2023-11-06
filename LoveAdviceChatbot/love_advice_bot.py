@@ -97,7 +97,7 @@ def chat_with_bot():
         user_language = translator.detect(user_input).lang
 
         # Translate the user's input to English for processing
-        user_input_english = translator.translate(user_input, src=user_language, dest='en').text
+        # user_input_english = translator.translate(user_input, src=user_language, dest='en').text
 
         # Get a response from the predefined responses or handle common questions
         response = get_love_advice(user_input_english, name, age)

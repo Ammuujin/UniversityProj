@@ -44,14 +44,16 @@ public class ParkingLot {
             String command = in.next();
             switch (command.toLowerCase()) {
                 case "a":
-                    String input = in.nextLine().trim();
-                    assignPS(input);
+                    String inputA = in.nextLine().trim();
+                    assignResidents(inputA);
                     break;
                 case "w":
-                    // withdrawPS();
+                    String inputW = in.nextLine().trim();
+                    wipeOutResidents(inputW);
                     break;
                 case "e":
-                    // extend();
+                    // String enterInput = in.nextLine().trim();
+                    // enter(enterInput);
                     break;
                 case "x":
                     // calculate();
@@ -73,7 +75,7 @@ public class ParkingLot {
     private static int getAvailableSpotsCount() {
         int count = 0;
         for (ParkingSpot spot : parkingSpots) {
-            if (!spot.isAvailable()) {
+            if (spot.isAvailable()) {
                 count++;
             }
         }
@@ -81,35 +83,26 @@ public class ParkingLot {
     }
 
     // Assign Parking Spot method
-    private static void assignPS(String input) {
+    private static void assignResidents(String input) {
         // Split the input string by spaces to get the individual parts
         String[] parts = input.split(" ");
         // Assuming the input format is: a carNumber phoneNumber year month day
         String carNumber = parts[0];
-        System.out.println("CarNumber: "+carNumber);
         String phoneNumber = parts[1];
-        System.out.println("Phone: "+phoneNumber);
-        // Validate the carNumber to be a 4-digit number
+        // Validate the car number to be a 4-digit number
         if (!carNumber.matches("\\d{4}")) {
             System.out.println("Error: Car number must be in 4 digits.");
             return;
         }
         int year = Integer.parseInt(parts[2]);
-        System.out.println("year: "+year);
         int month = Integer.parseInt(parts[3]);
-        System.out.println("month: "+month);
         int day = Integer.parseInt(parts[4]);
-        System.out.println("day: "+ day);
         // Construct the assignment date in the proper format
         LocalDate assignmentDate = LocalDate.of(year, month, day);
         String formattedDate = assignmentDate.format(DateTimeFormatter.ofPattern("yyyy MM dd"));
         boolean spotAssigned = false;
         for (int i = 0; i < parkingSpots.length && !spotAssigned; i++) {
-            // Check if the carNumber is already assigned
-            if (parkingSpots[i].getResidentCarNumber() != null && parkingSpots[i].getResidentCarNumber().equals(carNumber)) {
-                System.out.println("Error: This car number is already assigned to a parking spot.");
-                return;
-            }
+            // Check if the spot is available
             if (parkingSpots[i].isAvailable()) {
                 parkingSpots[i].assignToResident(carNumber, phoneNumber, formattedDate);
                 System.out.println(carNumber + "차량에 주차공간(#" + (i + 1) + " 번)이 배정되었습니다!");
@@ -119,6 +112,41 @@ public class ParkingLot {
         }
         if (!spotAssigned) {
             System.out.println("No available parking spots.");
+        }
+
+    // Method to wipe out resident parking assignments
+    private static void wipeOutResidents(String input) {
+        // Split the input string by spaces to get the individual parts
+        String[] parts = input.split(" ");
+        // Corrected indices based on the input format: w carNumber year month day
+        String carNumber = parts[0];
+        int year = Integer.parseInt(parts[1]);
+        int month = Integer.parseInt(parts[2]);
+        int day = Integer.parseInt(parts[3]);
+
+        // Construct the withdrawal date as a LocalDate object
+        LocalDate withdrawalDate = LocalDate.of(year, month, day);
+
+        boolean foundCar = false;
+        for (int i = 0; i < parkingSpots.length; i++) {
+            // Check if the current spot has the car number
+            if (parkingSpots[i].getAssignedCarNumber() != null
+                    && parkingSpots[i].getAssignedCarNumber().equals(carNumber)) {
+                // Compare LocalDate objects directly
+                if (parkingSpots[i].getAssignmentDate() != null
+                        && parkingSpots[i].getAssignmentDate().isEqual(withdrawalDate)) {
+                    // Clear the assignment
+                    parkingSpots[i].clearAssignment();
+                    System.out.println("거주자 우선주차 차량 " + carNumber + " 가 주차공간(#" + (i + 1) + ") 배정을 철회하였습니다!");
+                    foundCar = true;
+                    break;
+                }
+            }
+        }
+
+        // If the car number was not found or the date did not match
+        if (!foundCar) {
+            System.out.println("Error: Car number " + carNumber + " with given date not found.");
         }
     }
 }
