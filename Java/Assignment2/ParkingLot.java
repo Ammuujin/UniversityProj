@@ -301,8 +301,8 @@ public class ParkingLot {
     // Method to calculate income for a specific month and year
     private static void income(String incomeInput) {
         String[] parts = incomeInput.split(" ");
-        int year = Integer.parseInt(parts[1]);
-        int month = Integer.parseInt(parts[2]);
+        int year = Integer.parseInt(parts[0]);
+        int month = Integer.parseInt(parts[1]);
 
         // Variables to hold income from residents and non-residents
         int incomeFromResidents = 0;

@@ -10,7 +10,7 @@ public class ParkingSpot {
     private String carNumber;
     private LocalDate assignmentDate;
     private LocalTime assignmentTime;
-    private boolean isResident; // This field indicates if the spot is taken by a resident
+    private boolean isResident;
     private String phoneNumber;
     private int parkingSpotNumber;
     private String residentName;
@@ -65,8 +65,6 @@ public class ParkingSpot {
     }
 
     public String getResidentName() {
-        // This method would need to retrieve the resident's name.
-        // How this is done depends on where the resident information is stored.
         return this.residentName;
     }
 
@@ -91,7 +89,6 @@ public class ParkingSpot {
         this.isResident = true;
     }
 
-    // For assigning to non-residents
     public void assignToNonResident(String carNumber, String phoneNumber, LocalDate assignmentDate,
             LocalTime assignmentTime) {
         this.carNumber = carNumber;
@@ -122,7 +119,6 @@ public class ParkingSpot {
         this.assignmentTime = assignmentTime;
     }
 
-    // This method clears the assignment
     public void clearAssignment() {
         this.isOccupied = false;
         this.carNumber = null;
@@ -131,7 +127,6 @@ public class ParkingSpot {
         this.isResident = false;
     }
 
-    // Private helper method to avoid duplication of the assignment code
     private void assign(String carNumber, String phoneNumber, String formattedDate, boolean isResident) {
         this.carNumber = carNumber;
         this.phoneNumber = phoneNumber;
