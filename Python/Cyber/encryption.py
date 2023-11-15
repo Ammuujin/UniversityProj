@@ -18,6 +18,11 @@ def decrypt_message(encrypted_message, key):
     try:
         f = Fernet(key)
         return f.decrypt(encrypted_message).decode(), None
+    except ValueError as e:
+        if "Fernet key must be 32 url-safe base64-encoded bytes." in str(e):
+            return None, "Your input is wrong. Please check your decryption key."
+        else:
+            return None, e
     except Exception as e:
         return None, e
 
