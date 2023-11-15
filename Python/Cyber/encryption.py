@@ -1,5 +1,6 @@
 from cryptography.fernet import Fernet
 import base64
+import sys
 
 # Function to generate a Fernet key
 def generate_key():
@@ -11,7 +12,7 @@ def encrypt_message(message, key):
         f = Fernet(key)
         return f.encrypt(message.encode()), None
     except Exception as e:
-        return None, e
+        return None, f"Encryption error: {e}"
 
 # Function to decrypt a message
 def decrypt_message(encrypted_message, key):
@@ -20,34 +21,43 @@ def decrypt_message(encrypted_message, key):
         return f.decrypt(encrypted_message).decode(), None
     except ValueError as e:
         if "Fernet key must be 32 url-safe base64-encoded bytes." in str(e):
-            return None, "Your input is wrong. Please check your decryption key."
+            return None, "Decryption error: Invalid key format. Please check your key."
         else:
-            return None, e
+            return None, f"Decryption error: {e}"
     except Exception as e:
-        return None, e
+        return None, f"Decryption error: {e}"
 
 # Main function
 def main():
-    key = generate_key()
-    print(f"Generated Encryption Key (save this key to decrypt your message later): {key.decode()}")
+    try:
+        key = generate_key()
+        print(
+            f"Generated Encryption Key (save this key to decrypt your message later): {key.decode()}"
+        )
 
-    message = input("Enter a message to encrypt: ")
-    encrypted_message, error = encrypt_message(message, key)
+        message = input("Enter a message to encrypt: ")
+        encrypted_message, error = encrypt_message(message, key)
 
-    if error:
-        print(f"An error occurred during encryption: {error}")
-        return
-
-    print(f"Encrypted Message: {encrypted_message.decode()}")
-
-    if input("Do you want to decrypt it? (yes/no): ").lower() == "yes":
-        decryption_key = input("Enter the decryption key: ").encode()
-        decrypted_message, error = decrypt_message(encrypted_message, decryption_key)
-        
         if error:
-            print(f"An error occurred during decryption: {error}")
-        else:
-            print(f"Decrypted Message: {decrypted_message}")
+            print(error)
+            return
+
+        print(f"Encrypted Message: {encrypted_message.decode()}")
+
+        if input("Do you want to decrypt it? (yes/no): ").lower() == "yes":
+            decryption_key = input("Enter the decryption key: ").encode()
+            decrypted_message, error = decrypt_message(
+                encrypted_message, decryption_key
+            )
+
+            if error:
+                print(error)
+            else:
+                print(f"Decrypted Message: {decrypted_message}")
+    except KeyboardInterrupt:
+        print("\nOperation cancelled by user.")
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
 
 if __name__ == "__main__":
     main()
