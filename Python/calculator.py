@@ -2,11 +2,9 @@ import tkinter as tk
 from tkinter import messagebox
 import math  # Importing the math module
 
-
 def register_user():
     # Implement registration logic here
     pass
-
 
 def verify_login():
     global root
@@ -33,10 +31,23 @@ def open_calculator():
     display = tk.Entry(calc)
     display.grid(row=0, column=0, columnspan=4)
 
+    # Calculation history list
+    calculation_history = []
+
+    # Function to display calculation history
+    def show_history():
+        history_window = tk.Toplevel()
+        history_window.title("Calculation History")
+        history_text = "\n".join(calculation_history)
+        tk.Label(history_window, text=history_text, justify=tk.LEFT).pack()
+
+    # Modified on_click function
     def on_click(char):
         if char == "=":
             try:
                 result = eval(display.get())
+                calculation_expression = f"{display.get()} = {result}"
+                calculation_history.append(calculation_expression)  # Add to history
                 display.delete(0, tk.END)
                 display.insert(tk.END, str(result))
             except Exception as e:
@@ -48,6 +59,8 @@ def open_calculator():
             try:
                 value = float(display.get())
                 result = math.sqrt(value)
+                calculation_expression = f"√{value} = {result}"
+                calculation_history.append(calculation_expression)  # Add to history
                 display.delete(0, tk.END)
                 display.insert(tk.END, str(result))
             except Exception as e:
@@ -75,12 +88,16 @@ def open_calculator():
         "=",
         "/",
         "√",  # Adding square root button here
+        "H",  # Adding history button here
     ]
 
     row = 1
     col = 0
     for char in buttons:
-        button = tk.Button(calc, text=char, command=lambda ch=char: on_click(ch))
+        if char == "H":
+            button = tk.Button(calc, text=char, command=show_history)
+        else:
+            button = tk.Button(calc, text=char, command=lambda ch=char: on_click(ch))
         button.grid(row=row, column=col, sticky="nsew")
 
         col += 1
@@ -91,18 +108,16 @@ def open_calculator():
     # Improve the layout
     for i in range(4):
         calc.grid_columnconfigure(i, weight=1)
-    for i in range(1, 5):
+    for i in range(1, 6):
         calc.grid_rowconfigure(i, weight=1)
 
     # When the calculator is closed, show the main window again
     calc.protocol("WM_DELETE_WINDOW", on_calculator_close)
 
-
 def on_calculator_close():
     global root, calc
     root.deiconify()  # Show the main window again
     calc.destroy()  # Close the calculator window
-
 
 # Main window for login
 root = tk.Tk()
