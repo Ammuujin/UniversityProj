@@ -114,10 +114,10 @@ int max(int a, int b) {
 }
 
 int main() {
-    Node *root = newNode('B');
-    root->left = newNode('A');
-    root->left->left = newNode('D');
-    root->left->left->left = newNode('C');
+    Node *root = newNode('D');
+    root->left = newNode('C');
+    root->left->left = newNode('B');
+    root->left->left->left = newNode('A');
     printf("Level order traversal before balancing:\n");
     Levelorder(root);
     root = balanceTree(root);
