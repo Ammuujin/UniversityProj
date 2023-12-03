@@ -1,4 +1,4 @@
-package hw3;
+package Assignment3;
 
 public class ParkedCarCatalog {
     private Car[] parkedCars;

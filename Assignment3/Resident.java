@@ -1,4 +1,4 @@
-package hw3;
+package Assignment3;
 //Resident.java
 class Resident {
     private String name;

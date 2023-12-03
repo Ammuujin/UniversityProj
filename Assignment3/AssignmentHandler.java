@@ -1,4 +1,4 @@
-package hw3;
+package Assignment3;
 
 public class AssignmentHandler {
     private AssignedCatalog assignedCatalog; // This catalog keeps track of assigned cars

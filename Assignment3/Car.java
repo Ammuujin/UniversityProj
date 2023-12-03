@@ -1,4 +1,4 @@
-package hw3;
+package Assignment3;
 
 import java.time.Duration;
 import java.time.LocalDateTime;

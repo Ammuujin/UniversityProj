@@ -1,4 +1,4 @@
-package hw3;
+package Assignment3;
 
 public class ParkingSpotManager {
     private boolean[] spotsOccupied; // True if spot is occupied, false if available

@@ -1,4 +1,4 @@
-package hw3;
+package Assignment3;
 //ResidentManager.java
 import java.io.IOException;
 import java.nio.file.Files;
