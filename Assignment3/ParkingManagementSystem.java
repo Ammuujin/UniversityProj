@@ -13,9 +13,9 @@ public class ParkingManagementSystem {
     private CanceledCatalog canceledCatalog;
     private UnparkedCarCatalog unparkedCarCatalog;
 
-    private static int feeMonthly = 0;
-    private static int feePerTen = 0;
-    private static int numSpots = 0;
+    private static int parkingSpots;
+    private static int monthlyParkingFee;
+    private static int parkingFeePerTenMinutes;
 
     // Main method to start the application
     public static void main(String[] args) {
@@ -35,27 +35,20 @@ public class ParkingManagementSystem {
     // Method to run the parking management system
     public void run() {
         Scanner in = new Scanner(System.in);
-        System.out.println("Starting the Parking Management System...");
-
-        // Implement the logic to interact with the user and handle various operations
-        // This could be done with a menu-driven system in a while loop
+        System.out.println("Starting...");
+        System.out.print("Enter the number of parking spots: ");
+        parkingSpots = scanner.nextInt();
+        System.out.print("Enter the monthly parking fee for residents: ");
+        monthlyParkingFee = scanner.nextInt();
+        System.out.print("Enter the parking fee per 10 minutes: ");
+        parkingFeePerTenMinutes = scanner.nextInt();
         boolean exit = false;
         while (!exit) {
-            System.out.println("\nPlease choose an operation:");
-            System.out.println("1 - Assign Parking Spot");
-            System.out.println("2 - Cancel Parking Spot");
-            System.out.println("3 - Handle Resident Car Entry");
-            System.out.println("4 - Handle Non-Resident Car Entry");
-            System.out.println("5 - Handle Car Exit");
-            System.out.println("6 - Show Car List");
-            System.out.println("7 - Show Monthly Income");
-            System.out.println("0 - Exit");
-            System.out.print("Enter your choice: ");
-            int choice = in.nextInt();
+            String choice = in.nextLine()
 
             switch (choice) {
-                case 1:
-                    handleAssignment();
+                case "a":
+                    AssignmentHandler();
                     break;
                 case 2:
                     handleCancel();
@@ -86,37 +79,4 @@ public class ParkingManagementSystem {
 
         in.close(); // Don't forget to close the scanner
     }
-
-    // Implement all the handlers for the operations listed
-    private void handleAssignment() {
-        // Implementation for handling parking spot assignments
-    }
-
-    private void handleCancel() {
-        // Implementation for handling cancellation of parking spot assignments
-    }
-
-    private void handleResidentCarEnter() {
-        // Implementation for handling entry of resident cars
-    }
-
-    private void handleNonResidentCarEnter() {
-        // Implementation for handling entry of non-resident cars
-    }
-
-    private void handleCarExit() {
-        // Implementation for handling car exits
-    }
-
-    private void handleShowCarList() {
-        // Implementation for displaying the list of parked cars
-    }
-
-    private void handleMonthlyIncome() {
-        // Implementation for displaying the monthly income
-    }
-
-    // Additional methods for each operation would go here
-    // ...
-
 }
